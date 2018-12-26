@@ -1,6 +1,5 @@
-package protocol.login;
+package protocol.packet;
 
-import protocol.Packet;
 import protocol.constant.Command;
 
 public class LoginRequestPacket extends Packet {

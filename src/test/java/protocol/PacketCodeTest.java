@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import org.junit.Assert;
 import org.junit.Test;
-import protocol.command.PacketCodeC;
-import protocol.login.LoginRequestPacket;
+import protocol.packet.LoginRequestPacket;
+import protocol.packet.Packet;
 
 public class PacketCodeTest {
     @Test

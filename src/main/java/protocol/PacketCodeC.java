@@ -1,13 +1,9 @@
-package protocol.command;
+package protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import protocol.JsonSerializer;
-import protocol.Packet;
-import protocol.Serializer;
+import protocol.packet.*;
 import protocol.constant.Command;
-import protocol.login.LoginRequestPacket;
-import protocol.login.LoginResponsePacket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +31,8 @@ public class PacketCodeC {
         serializerMap = new HashMap<>();
         packetTypeMap.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(Command.MSG_REQUEST, MsgRequestPacket.class);
+        packetTypeMap.put(Command.MSG_RESPONSE, MsgResponsePacket.class);
         Serializer jsonSerializer = new JsonSerializer();
         serializerMap.put(jsonSerializer.getSerializerAlgorithm(), jsonSerializer);
     }

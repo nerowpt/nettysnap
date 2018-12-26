@@ -1,11 +1,14 @@
-package protocol;
+package protocol.handles;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import protocol.command.PacketCodeC;
-import protocol.login.LoginRequestPacket;
-import protocol.login.LoginResponsePacket;
+import protocol.PacketCodeC;
+import protocol.packet.LoginRequestPacket;
+import protocol.packet.LoginResponsePacket;
+import protocol.packet.MsgResponsePacket;
+import protocol.packet.Packet;
+import protocol.utils.LoginUtil;
 
 import java.util.Date;
 
@@ -32,11 +35,15 @@ public class ClientLoginHandle extends ChannelInboundHandlerAdapter {
         if (packet instanceof LoginResponsePacket) {
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
             if (loginResponsePacket.isSuccess()) {
+                LoginUtil.markAsLogin(ctx.channel());
                 System.out.println(loginResponsePacket.getReason());
             } else {
                 System.out.println("登录失败，失败原因：" + loginResponsePacket.getReason());
             }
-        } else {
+        } else if (packet instanceof MsgResponsePacket) {
+            MsgResponsePacket messageResponsePacket = (MsgResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMsg());
+        }else {
             System.out.println("not loginResponsePacket!");
         }
 
