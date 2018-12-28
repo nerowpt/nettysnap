@@ -49,6 +49,16 @@ public class PacketCodeC {
         return byteBuf;
     }
 
+    public void encode(ByteBuf byteBuf, Packet packet) {
+        byte[] bytes = Serializer.DEFAULT.serializer(packet);
+        byteBuf.writeInt(MAGIC_NUMBER);
+        byteBuf.writeByte(packet.getVersion());
+        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());
+        byteBuf.writeByte(packet.getCommand());
+        byteBuf.writeInt(bytes.length);
+        byteBuf.writeBytes(bytes);
+    }
+
     public Packet decode(ByteBuf byteBuf) {
         byteBuf.skipBytes(4);
         byteBuf.skipBytes(1);
